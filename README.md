@@ -14,7 +14,7 @@ The package can be installed, by adding `files_sorted_by_sizes` to your list of 
 ```elixir
 def deps do
   [
-    {:files_sorted_by_sizes, git: "innaky/files_sorted_by_sizes", tag: "v0.1.0"}
+    {:files_sorted_by_sizes, git: "https://github.com/innaky/files_sorted_by_sizes", tag: "v0.1.0"}
   ]
 end
 ```
