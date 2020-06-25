@@ -4,17 +4,39 @@ defmodule FilesSortedBySizes do
   """
 
   @doc """
-  List greater. Return a list of list with filenames of a directory sorted by size.
+  List greater Directory. Return a list of list with filenames of a directory sorted by size.
+  But is functional only with a file directory.
+
+  ## Examples
+
+      iex> FilesSortedBySizes.lg_dir(".")
+
+  """
+  def lg_dir(filedir) do
+    lst_name_size = lg_name_size(filedir)
+    Enum.sort(lst_name_size, fn x, y -> List.last(x) > List.last(y) end)
+  end
+
+  @doc """
+  List Greater. Return a list of list with filenames of a directory sorted by size. 
+  if `filename` is not a directory, return a list with the filename and the size of
+  this file.
 
   ## Examples
 
       iex> FilesSortedBySizes.lg(".")
 
   """
-  def lg(filedir) do
-    lst_name_size = lg_name_size(filedir)
-    Enum.sort(lst_name_size, fn x, y -> List.last(x) > List.last(y) end)
+
+  def lg(filename) do
+    {:ok, file} = File.lstat(filename)
+    if file.type != :directory do
+      [filename, file.size]
+    else
+      lg_dir(filename)
+    end
   end
+    
 
   @doc """
   Return a list of list with filenames of a directory.
